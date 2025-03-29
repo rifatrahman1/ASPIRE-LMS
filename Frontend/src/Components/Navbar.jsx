@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoNotifications } from "react-icons/io5";
 import { TbLogout } from "react-icons/tb";
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../Provider/AuthProvider';
 
 const Navbar = () => {
+      const { user, log_out } = useContext(AuthContext);
       return (
             <div className='bg-[#353334] flex justify-between items-center text-white px-7 py-8'>
                   <div className='flex items-center gap-10'>
@@ -17,7 +19,12 @@ const Navbar = () => {
                   </div>
                   <div className='flex items-center gap-10'>
                         <IoNotifications className='text-3xl' />
-                        <div className='dropdown dropdown-end z-50'>
+                        <div>
+                              <p>{user?.displayName}</p>
+                              <p className='text-[#807f7f] text-right'>Libraian</p>
+                        </div>
+                        {
+                              user ?  <div className='dropdown dropdown-end z-50'>
                               <div
                                     tabIndex={0}
                                     role='button'
@@ -27,6 +34,7 @@ const Navbar = () => {
                                           <img
                                                 referrerPolicy='no-referrer'
                                                 alt='User Profile Photo'
+                                                src={user?.photoURL}
                                           />
                                     </div>
                               </div>
@@ -44,13 +52,15 @@ const Navbar = () => {
                                     </li>
                                     <li className='mt-2'>
                                           <button
-                                                // onClick={logOut}
+                                                onClick={log_out}
                                                 className='bg-gray-200 text-center flex items-center gap-3 justify-center'>
                                                 Logout <span><TbLogout /></span>
                                           </button>
                                     </li>
                               </ul>
-                        </div>
+                        </div> : <Link to={'/login'}>Sign In</Link>
+                        }
+
                   </div>
             </div>
       );
