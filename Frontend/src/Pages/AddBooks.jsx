@@ -24,14 +24,22 @@ export default function BookForm() {
             rating: 5,
       });
 
-      const handleSubmit = (e) => {
-            e.preventDefault();
+      const handleSubmit = (event) => {
+            event.preventDefault();
             // Here you would typically send the data to your backend
-            console.log('Form submitted:', formData);
+            const form = event.target;
+            const image = form.coverImage.value;
+            const title = form.title.value;
+            const quantity = form.quantity.value;
+            const author = form.authorName.value;
+            const category = form.category.value;
+            const rating = form.rating.value;
+            const description = form.description.value;
+            console.table({image, title, quantity, author, category, rating, description});
       };
 
-      const handleChange = (e) => {
-            const { name, value } = e.target;
+      const handleChange = (event) => {
+            const { name, value } = event.target;
             setFormData(prev => ({ ...prev, [name]: value }));
       };
 
